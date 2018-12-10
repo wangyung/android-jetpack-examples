@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import idv.freddiew.jetpackexamples.R
+import java.lang.IllegalStateException
 
 class MainFragment : Fragment() {
 
@@ -21,7 +22,9 @@ class MainFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
+        viewModel = activity?.run {
+            ViewModelProviders.of(this).get(MainViewModel::class.java)
+        } ?: throw IllegalStateException("No view model")
     }
 
     companion object {
